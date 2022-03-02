@@ -1,0 +1,54 @@
+<h2 class="h2-custom">Detail :</h2>
+
+<mat-card *ngIf="currentTodo | async; let todo">
+  <mat-card-title>{{todo.title}}</mat-card-title>
+  <mat-divider inset></mat-divider>
+
+  <mat-card-content>
+
+    <div class="description-content">
+      <mat-icon>description</mat-icon>
+      <p>
+        <ng-container *ngIf="todo.description">{{(currentTodo| async)?.description}}</ng-container>
+        <ng-container *ngIf="!todo.description">Please add a description</ng-container>
+      </p>
+    </div>
+
+    <br/>
+
+    <div class="description-content">
+      <mat-icon>monitor_heart</mat-icon>
+      <p>
+      <ng-container *ngIf="todo.isClosed">Task is finished !</ng-container>
+      <ng-container *ngIf="!todo.isClosed">Task is in progress !</ng-container>
+      </p>
+    </div>
+
+    <br/>
+
+    <div class="description-content">
+      <mat-icon>update</mat-icon>
+      <p>
+        Last update : {{todo.lastUpdate | date:'medium'}}
+      </p>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button
+            (click)="closeTodo(todo)">
+
+      <ng-container *ngIf="todo.isClosed">
+        <span> Reopen the task</span>
+        <mat-icon>lock_open</mat-icon>
+      </ng-container>
+
+      <ng-container *ngIf="!todo.isClosed">
+        <mat-icon>lock</mat-icon>
+        <span>Close the task</span>
+      </ng-container>
+
+    </button>
+  </mat-card-actions>
+
+</mat-card>

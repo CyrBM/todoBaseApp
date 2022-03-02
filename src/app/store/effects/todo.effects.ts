@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TodosService } from '../../shared/services/todos.service';
 import {
+  getDetailTodo,
+  getDetailTodoFailed,
+  getDetailTodoSuccess,
   getTodos,
   getTodosFailed,
   getTodosSuccess,
@@ -9,7 +12,7 @@ import {
   updateTodoStateFailed,
   updateTodoStateSuccess,
 } from '../actions/todo.actions';
-import { catchError, map, mergeMap, switchMap } from 'rxjs';
+import { catchError, map, mergeMap, switchMap, concatMap, tap } from 'rxjs';
 import { TodoModel } from '../../shared/models/todo.model';
 
 @Injectable()
@@ -19,7 +22,7 @@ export class TodoEffects {
   getTodos$ = createEffect(() =>
     this.$actions.pipe(
       ofType(getTodos),
-      mergeMap(() =>
+      concatMap(() =>
         this.todosService.getAllTodos().pipe(
           map((todos) => getTodosSuccess({ todos })),
           catchError(() => [getTodosFailed()])
@@ -46,6 +49,18 @@ export class TodoEffects {
             };
             return [updateTodoStateFailed({ todo: todoRollBack })];
           })
+        )
+      )
+    )
+  );
+
+  getOneTodo$ = createEffect(() =>
+    this.$actions.pipe(
+      ofType(getDetailTodo),
+      switchMap(({ idTodo }) =>
+        this.todosService.getTodoById(idTodo).pipe(
+          map((todo) => getDetailTodoSuccess({ todo })),
+          catchError(() => [getDetailTodoFailed()])
         )
       )
     )

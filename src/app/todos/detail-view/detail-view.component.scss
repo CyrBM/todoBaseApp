@@ -1,0 +1,30 @@
+.h2-custom {
+  display: flex;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 0;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+.description-content {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 5rem;
+  align-items: center;
+  p {
+    padding-left: 1rem;
+    margin-bottom: 0;
+    height: fit-content;
+  }
+}
+mat-card-content {
+  max-width: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+mat-card-title {
+  padding-bottom: 1rem;
+}

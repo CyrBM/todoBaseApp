@@ -1,9 +1,14 @@
 import { TodoModel } from '../../shared/models/todo.model';
 import { createReducer, on } from '@ngrx/store';
 import {
+  getDetailTodo,
+  getDetailTodoFailed,
+  getDetailTodoSuccess,
+  getTodos,
   getTodosFailed,
   getTodosSuccess,
   loadSpinner,
+  updateTodoState,
   updateTodoStateFailed,
   updateTodoStateSuccess,
 } from '../actions/todo.actions';
@@ -35,6 +40,10 @@ function getTodosListUpdated(state: AppState, todo: TodoModel): TodoModel[] {
 
 export const appReducer = createReducer(
   initialState,
+  on(getTodos, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
   on(getTodosSuccess, (state, { todos }) => ({
     ...state,
     todos,
@@ -44,6 +53,10 @@ export const appReducer = createReducer(
     ...state,
     todos: [],
     isLoading: false,
+  })),
+  on(updateTodoState, (state, { todo }) => ({
+    ...state,
+    isLoading: true,
   })),
   on(updateTodoStateSuccess, (state, { todo }) => ({
     ...state,
@@ -55,9 +68,18 @@ export const appReducer = createReducer(
     todos: getTodosListUpdated(state, todo),
     isLoading: false,
   })),
-  // TODO to extract in another reducer for clean code
-  on(loadSpinner, (state) => ({
+  on(getDetailTodo, (state, { idTodo }) => ({
     ...state,
     isLoading: true,
+  })),
+  on(getDetailTodoSuccess, (state, { todo }) => ({
+    ...state,
+    isLoading: false,
+    todos: [todo],
+  })),
+  on(getDetailTodoFailed, (state) => ({
+    ...state,
+    isLoading: false,
+    todos: [],
   }))
 );

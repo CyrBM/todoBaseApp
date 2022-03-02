@@ -15,10 +15,15 @@ export class TodosService {
   }
 
   public updateTodoState(todo: TodoModel): Observable<TodoModel> {
-    console.log(todo);
     return this.httpClient.put<TodoModel>(
       `${environment.baseApiUrl}/todo/${todo.id}`,
       todo
+    );
+  }
+
+  public getTodoById(idTodo: string): Observable<TodoModel> {
+    return this.httpClient.get<TodoModel>(
+      `${environment.baseApiUrl}/todo/${idTodo}`
     );
   }
 }

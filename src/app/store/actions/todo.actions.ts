@@ -21,4 +21,17 @@ export const updateTodoStateFailed = createAction(
   props<{ todo: TodoModel }>()
 );
 
+export const getDetailTodo = createAction(
+  '[TODO] get one todo for detail',
+  props<{ idTodo: string }>()
+);
+
+export const getDetailTodoSuccess = createAction(
+  '[TODO] get one todo for detail success',
+  props<{ todo: TodoModel }>()
+);
+export const getDetailTodoFailed = createAction(
+  '[TODO] get one todo for detail FAIL'
+);
+
 export const loadSpinner = createAction('[SPINNER] LOAD');

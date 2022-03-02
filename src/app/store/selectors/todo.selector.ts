@@ -28,3 +28,8 @@ export const selectIsLoading = createSelector(
   selectAppState,
   (state: AppState) => state.isLoading
 );
+
+export const selectTodoFromId = (id: string) =>
+  createSelector(selectTodosList, (todoList: TodoModel[]) =>
+    todoList.find((x) => x.id === id)
+  );

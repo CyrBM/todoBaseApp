@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { selectTodosList } from '../../store/selectors/todo.selector';
 import { getTodos, updateTodoState } from '../../store/actions/todo.actions';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-list',
@@ -14,7 +15,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class DisplayListComponent implements OnInit {
   todos$: Observable<TodoModel[]>;
 
-  constructor(private readonly store: Store) {
+  constructor(private readonly store: Store, private router: Router) {
     this.todos$ = this.store.select(selectTodosList);
   }
 
@@ -22,7 +23,11 @@ export class DisplayListComponent implements OnInit {
     this.store.dispatch(getTodos());
   }
 
-  changeCheckbox($event: MatCheckboxChange, todo: TodoModel): void {
+  changeCheckbox(todo: TodoModel): void {
     this.store.dispatch(updateTodoState({ todo: todo }));
+  }
+
+  goToDetails(id: string): void {
+    this.router.navigate([`todo-detail/${id}`]);
   }
 }

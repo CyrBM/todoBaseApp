@@ -7,6 +7,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { By } from '@angular/platform-browser';
 import { selectTodosList } from '../../store/selectors/todo.selector';
 import { TodoModel } from '../../shared/models/todo.model';
+import { Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DisplayListComponent', () => {
   let component: DisplayListComponent;
@@ -22,7 +25,11 @@ describe('DisplayListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [
+        SharedModule,
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([]),
+      ],
       declarations: [DisplayListComponent],
       providers: [provideMockStore()],
     }).compileComponents();

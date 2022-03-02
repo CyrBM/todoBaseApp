@@ -87,34 +87,4 @@ describe('TODO Reducer', () => {
       expect(state).not.toBe(newState);
     });
   });
-
-  /* TODO describe('GetTodos Failed action', () => {
-    it('should retrieve  initialState: just an aempty array because fail', () => {
-      const initialState: AppState = todoRecuder.initialState;
-
-      const action = getTodosFailed();
-
-      const state = todoRecuder.appReducer(initialState, action);
-
-      expect(state).toEqual(initialState);
-      expect(state).not.toBe(initialState);
-    });
-  });*/
-
-  describe('Test Spinner Events', () => {
-    it('should retrieve  initialState: just an aempty array because fail', () => {
-      const initialState: AppState = todoRecuder.initialState;
-
-      const spinnerState: AppState = {
-        todos: [],
-        isLoading: true,
-      };
-      const action = loadSpinner();
-
-      const state = todoRecuder.appReducer(initialState, action);
-
-      expect(state).toEqual(spinnerState);
-      expect(state).not.toBe(spinnerState);
-    });
-  });
 });

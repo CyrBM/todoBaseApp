@@ -66,4 +66,26 @@ describe('TodosService', () => {
 
     req.flush(todoToUpdate);
   });
+
+  it('should find and return todo by id', () => {
+    const dateOfMockedTodo: Date = new Date();
+    const todoToReturn: TodoModel = {
+      id: 'aa',
+      title: 'a',
+      lastUpdate: dateOfMockedTodo,
+      isClosed: false,
+    };
+
+    service
+      .getTodoById(todoToReturn.id)
+      .pipe(first())
+      .subscribe((res: TodoModel) => {
+        expect(res).toEqual(todoToReturn);
+      });
+
+    const req = httpMock.expectOne((r) => r.url === `/api/todo/aa`);
+    expect(req.request.method).toEqual('GET');
+
+    req.flush(todoToReturn);
+  });
 });

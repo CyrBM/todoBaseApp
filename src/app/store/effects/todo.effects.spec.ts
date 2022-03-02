@@ -39,8 +39,10 @@ describe('Effects', () => {
   });
 
   describe('getTodos$', () => {
-    it('should dispatch getTodosSuccess action when todoService.getAllTodos return a result', () => {
-      const mockedTodos: TodoModel[] = [{ title: 'aTitle', isClosed: true }];
+    fit('should dispatch getTodosSuccess action when todoService.getAllTodos return a result', () => {
+      const mockedTodos: TodoModel[] = [
+        { id: 'aa', title: 'aTitle', isClosed: true, lastUpdate: new Date() },
+      ];
       todosService.getAllTodos.and.returnValue(of(mockedTodos));
 
       actions = hot('-a-', {

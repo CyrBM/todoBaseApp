@@ -33,3 +33,34 @@ ul,li {
 .crossed-out{
   text-decoration: line-through;
 }
+
+
+.todo-card-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0.1rem;
+}
+
+.crossed-out{
+  text-decoration: line-through;
+}
+
+.card-content {
+  padding: 0.5rem 0.2rem;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+
+.mat-card-container {
+  transform: scale(0.9);
+  transition: width 0.5s, height 0.5s, transform 0.5s, box-shadow 0.75s;
+}
+.mat-card-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 12px 2px #673ab7;
+}
+
+
+.todo-card-title span {
+  cursor: pointer;
+}

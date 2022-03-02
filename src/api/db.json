@@ -16,6 +16,7 @@
       "id": "3",
       "title": "Conferia",
       "isClosed": true,
+      "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
       "lastUpdate": "2022-03-02T14:49:50.215Z"
     },
     {
@@ -29,26 +30,29 @@
     {
       "id": "1",
       "title": "Bolax",
-      "isClosed": true,
-      "lastUpdate": "2022-03-02T14:59:36.288Z"
+      "isClosed": false,
+      "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+      "lastUpdate": "2022-03-02T15:57:58.753Z"
     },
     {
       "id": "2",
       "title": "Decratex",
-      "isClosed": false,
-      "lastUpdate": "2022-03-02T14:59:04.183Z"
+      "isClosed": true,
+      "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+      "lastUpdate": "2022-03-03T14:11:04.749Z"
     },
     {
       "id": "3",
       "title": "Conferia",
       "isClosed": false,
-      "lastUpdate": "2022-03-02T14:57:19.584Z"
+      "description": "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+      "lastUpdate": "2022-03-02T16:27:22.151Z"
     },
     {
       "id": "4",
       "title": "Zyple",
-      "isClosed": true,
-      "lastUpdate": "2022-03-02T14:59:45.127Z"
+      "isClosed": false,
+      "lastUpdate": "2022-03-03T18:49:25.703Z"
     }
   ]
 }

@@ -2,20 +2,35 @@
 
 <ul class="list-container" #todosList>
   <li class="item-container" *ngFor="let todo of todos$ | async">
-    <mat-card>
+    <mat-card class="mat-card-container">
       <mat-card-title class="todo-card-title">
-        <span [ngClass]="{'crossed-out': todo.isClosed}">{{todo.title}}</span>
+        <span
+          [ngClass]="{'crossed-out': todo.isClosed}">
+          {{todo.title}}</span>
+
         <mat-checkbox aria-label="Todo is finished?"
                       [checked]="todo.isClosed"
                       color="primary"
-                      (change)="changeCheckbox($event, todo)"></mat-checkbox>
+                      (change)="changeCheckbox(todo)"></mat-checkbox>
       </mat-card-title>
 
-      <mat-card-content>
+      <mat-card-content class="card-content"
+        (click)="goToDetails(todo.id)">
         <p *ngIf="todo.isClosed">Task is finished</p>
         <p *ngIf="!todo.isClosed">Task is in progress</p>
         <p>Last Update: {{todo.lastUpdate | date:'medium'}}</p>
       </mat-card-content>
+
+      <mat-divider inset></mat-divider>
+
+      <mat-card-actions align="end">
+        <button mat-button
+                (click)="goToDetails(todo.id)">
+          <mat-icon>search</mat-icon>
+          See {{todo.title}} details
+        </button>
+      </mat-card-actions>
+
     </mat-card>
   </li>
 </ul>
