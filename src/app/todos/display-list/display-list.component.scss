@@ -24,3 +24,12 @@ ul,li {
   padding-bottom: 2rem;
   padding-top: 2rem;
 }
+
+.todo-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.crossed-out{
+  text-decoration: line-through;
+}

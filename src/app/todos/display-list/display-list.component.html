@@ -3,7 +3,13 @@
 <ul class="list-container" #todosList>
   <li class="item-container" *ngFor="let todo of todos$ | async">
     <mat-card>
-      <mat-card-title>{{todo.title}}</mat-card-title>
+      <mat-card-title class="todo-card-title">
+        <span [ngClass]="{'crossed-out': todo.isClosed}">{{todo.title}}</span>
+        <mat-checkbox aria-label="Todo is finished?"
+                      [checked]="todo.isClosed"
+                      color="primary"
+                      (change)="changeCheckbox($event, todo)"></mat-checkbox>
+      </mat-card-title>
 
       <mat-card-content>
         <p *ngIf="todo.isClosed">Task is finished</p>

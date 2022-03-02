@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { TodoModel } from '../../shared/models/todo.model';
 import { Store } from '@ngrx/store';
 import { selectTodosList } from '../../store/selectors/todo.selector';
-import { getTodos } from '../../store/actions/todo.actions';
+import { getTodos, updateTodoState } from '../../store/actions/todo.actions';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-display-list',
@@ -19,5 +20,9 @@ export class DisplayListComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(getTodos());
+  }
+
+  changeCheckbox($event: MatCheckboxChange, todo: TodoModel): void {
+    this.store.dispatch(updateTodoState({ todo: todo }));
   }
 }

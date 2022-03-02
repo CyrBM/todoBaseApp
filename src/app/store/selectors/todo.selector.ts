@@ -6,7 +6,22 @@ export const selectAppState = createFeatureSelector<AppState>('appState');
 
 export const selectTodosList = createSelector(
   selectAppState,
-  (state: AppState) => state.todos
+  (state: AppState) =>
+    [...state.todos].sort((a, b) => {
+      if (a.isClosed && b.isClosed) {
+        return a.lastUpdate.valueOf() > b.lastUpdate.valueOf() ? 1 : -1;
+      }
+      if (a.isClosed && !b.isClosed) {
+        return 1;
+      }
+      if (!a.isClosed && b.isClosed) {
+        return -1;
+      }
+      if (!a.isClosed && !b.isClosed) {
+        return a.lastUpdate.valueOf() > b.lastUpdate.valueOf() ? -1 : 1;
+      }
+      return 0;
+    })
 );
 
 export const selectIsLoading = createSelector(

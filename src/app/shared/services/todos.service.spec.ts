@@ -26,10 +26,10 @@ describe('TodosService', () => {
   it('should be return todo list', () => {
     const dateOfMockedTodo: Date = new Date();
     const mockListOfTodo: TodoModel[] = [
-      { title: 'a', lastUpdate: dateOfMockedTodo, isClosed: false },
-      { title: 'b', lastUpdate: dateOfMockedTodo, isClosed: false },
-      { title: 'c', lastUpdate: dateOfMockedTodo, isClosed: true },
-      { title: 'd', lastUpdate: dateOfMockedTodo, isClosed: true },
+      { id: 'aa', title: 'a', lastUpdate: dateOfMockedTodo, isClosed: false },
+      { id: 'bb', title: 'b', lastUpdate: dateOfMockedTodo, isClosed: false },
+      { id: 'cc', title: 'c', lastUpdate: dateOfMockedTodo, isClosed: true },
+      { id: 'dd', title: 'd', lastUpdate: dateOfMockedTodo, isClosed: true },
     ];
 
     service
@@ -39,11 +39,31 @@ describe('TodosService', () => {
         expect(res).toEqual(mockListOfTodo);
       });
 
-    const req = httpMock.expectOne(
-      (r) => r.url === `${environment.baseApiUrl}/api/todos`
-    );
+    const req = httpMock.expectOne((r) => r.url === `/api/todos`);
     expect(req.request.method).toEqual('GET');
 
     req.flush(mockListOfTodo);
+  });
+
+  it('should update todo and return it', () => {
+    const dateOfMockedTodo: Date = new Date();
+    const todoToUpdate: TodoModel = {
+      id: 'aa',
+      title: 'a',
+      lastUpdate: dateOfMockedTodo,
+      isClosed: false,
+    };
+
+    service
+      .updateTodoState(todoToUpdate)
+      .pipe(first())
+      .subscribe((res: TodoModel) => {
+        expect(res).toEqual(todoToUpdate);
+      });
+
+    const req = httpMock.expectOne((r) => r.url === `/api/todo/aa`);
+    expect(req.request.method).toEqual('PUT');
+
+    req.flush(todoToUpdate);
   });
 });

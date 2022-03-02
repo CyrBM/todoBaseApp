@@ -16,8 +16,8 @@ describe('DisplayListComponent', () => {
 
   const mockedDate: Date = new Date();
   const mockedTodo: TodoModel[] = [
-    { title: 'a', isClosed: false, lastUpdate: mockedDate },
-    { title: 'b', isClosed: true, lastUpdate: mockedDate },
+    { id: 'aa', title: 'a', isClosed: false, lastUpdate: mockedDate },
+    { id: 'bb', title: 'b', isClosed: true, lastUpdate: mockedDate },
   ];
 
   beforeEach(async () => {
@@ -63,6 +63,10 @@ describe('DisplayListComponent', () => {
     expect(
       todoElements[0].query(By.css('mat-card-title')).nativeElement.innerText
     ).toContain('a');
+    expect(
+      todoElements[0].query(By.css('mat-card-title span')).nativeElement
+        .className
+    ).not.toContain('crossed-out');
     expect(contentOfFirstMatCard[0].nativeElement.innerText).toContain(
       'Task is in progress'
     );
@@ -70,6 +74,10 @@ describe('DisplayListComponent', () => {
     expect(
       todoElements[1].query(By.css('mat-card-title')).nativeElement.innerText
     ).toContain('b');
+    expect(
+      todoElements[1].query(By.css('mat-card-title span')).nativeElement
+        .className
+    ).toContain('crossed-out');
     expect(contentOfSecondMatCard[0].nativeElement.innerText).toContain(
       'Task is finished'
     );

@@ -13,4 +13,12 @@ export class TodosService {
   public getAllTodos(): Observable<TodoModel[]> {
     return this.httpClient.get<TodoModel[]>(`${environment.baseApiUrl}/todos`);
   }
+
+  public updateTodoState(todo: TodoModel): Observable<TodoModel> {
+    console.log(todo);
+    return this.httpClient.put<TodoModel>(
+      `${environment.baseApiUrl}/todo/${todo.id}`,
+      todo
+    );
+  }
 }

@@ -5,8 +5,12 @@ import {
   getTodos,
   getTodosFailed,
   getTodosSuccess,
+  updateTodoState,
+  updateTodoStateFailed,
+  updateTodoStateSuccess,
 } from '../actions/todo.actions';
-import { catchError, map, mergeMap } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs';
+import { TodoModel } from '../../shared/models/todo.model';
 
 @Injectable()
 export class TodoEffects {
@@ -19,6 +23,29 @@ export class TodoEffects {
         this.todosService.getAllTodos().pipe(
           map((todos) => getTodosSuccess({ todos })),
           catchError(() => [getTodosFailed()])
+        )
+      )
+    )
+  );
+
+  updateStateTodo$ = createEffect(() =>
+    this.$actions.pipe(
+      ofType(updateTodoState),
+      map(({ todo: todoMap }) => ({
+        ...todoMap,
+        isClosed: !todoMap.isClosed,
+        lastUpdate: new Date(),
+      })),
+      switchMap((todo: TodoModel) =>
+        this.todosService.updateTodoState(todo).pipe(
+          map((todo) => updateTodoStateSuccess({ todo })),
+          catchError(() => {
+            const todoRollBack = {
+              ...todo,
+              isClosed: !todo.isClosed,
+            };
+            return [updateTodoStateFailed({ todo: todoRollBack })];
+          })
         )
       )
     )
