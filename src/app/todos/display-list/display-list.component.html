@@ -1,0 +1,16 @@
+<h2 class="h2-custom">Todos :</h2>
+
+<ul class="list-container" #todosList>
+  <li class="item-container" *ngFor="let todo of todos$ | async">
+    <mat-card>
+      <mat-card-title>{{todo.title}}</mat-card-title>
+
+      <mat-card-content>
+        <p *ngIf="todo.isClosed">Task is finished</p>
+        <p *ngIf="!todo.isClosed">Task is in progress</p>
+        <p>Last Update: {{todo.lastUpdate | date:'medium'}}</p>
+      </mat-card-content>
+    </mat-card>
+  </li>
+</ul>
+
