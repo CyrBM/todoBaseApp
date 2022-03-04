@@ -3,13 +3,13 @@ import { TodoModel } from '../../shared/models/todo.model';
 
 export const getTodos = createAction('[TODO] get all Todos');
 export const getTodosSuccess = createAction(
-  '[TODO] get all Todos success',
+  '[TODOS] get all Todos success',
   props<{ todos: TodoModel[] }>()
 );
-export const getTodosFailed = createAction('[TODO] get all Todos FAIL');
+export const getTodosFailed = createAction('[TODOS] get all Todos FAIL');
 
 export const updateTodoState = createAction(
-  '[TODO] update TODO state',
+  '[TODOS] update TODO state',
   props<{ todo: TodoModel }>()
 );
 export const updateTodoStateSuccess = createAction(
@@ -34,4 +34,14 @@ export const getDetailTodoFailed = createAction(
   '[TODO] get one todo for detail FAIL'
 );
 
-export const loadSpinner = createAction('[SPINNER] LOAD');
+export const addNewTodo = createAction(
+  '[TODO] add new TODO',
+  props<{ todo: TodoModel }>()
+);
+
+export const addNewTodoSuccess = createAction(
+  '[TODO] add new TODO success',
+  props<{ todo: TodoModel }>()
+);
+
+export const addNewTodoFailed = createAction('[TODO] add new TODO FAIL');

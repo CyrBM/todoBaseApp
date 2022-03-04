@@ -3,7 +3,6 @@ import { AppState } from './todo.reducers';
 import {
   getTodosFailed,
   getTodosSuccess,
-  loadSpinner,
   updateTodoStateSuccess,
 } from '../actions/todo.actions';
 

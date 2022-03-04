@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TodosService } from '../../shared/services/todos.service';
 import {
+  addNewTodo,
+  addNewTodoFailed,
+  addNewTodoSuccess,
   getDetailTodo,
   getDetailTodoFailed,
   getDetailTodoSuccess,
@@ -61,6 +64,18 @@ export class TodoEffects {
         this.todosService.getTodoById(idTodo).pipe(
           map((todo) => getDetailTodoSuccess({ todo })),
           catchError(() => [getDetailTodoFailed()])
+        )
+      )
+    )
+  );
+
+  addNewTodo$ = createEffect(() =>
+    this.$actions.pipe(
+      ofType(addNewTodo),
+      switchMap(({ todo }) =>
+        this.todosService.addNewTodo(todo).pipe(
+          map((todo) => addNewTodoSuccess({ todo })),
+          catchError(() => [addNewTodoFailed()])
         )
       )
     )

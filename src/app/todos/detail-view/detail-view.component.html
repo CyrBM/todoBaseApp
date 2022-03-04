@@ -1,7 +1,7 @@
 <h2 class="h2-custom">Detail :</h2>
 
 <mat-card *ngIf="currentTodo | async; let todo">
-  <mat-card-title>{{todo.title}}</mat-card-title>
+  <mat-card-title>{{todo.title | uppercase}}</mat-card-title>
   <mat-divider inset></mat-divider>
 
   <mat-card-content>
@@ -9,7 +9,7 @@
     <div class="description-content">
       <mat-icon>description</mat-icon>
       <p>
-        <ng-container *ngIf="todo.description">{{(currentTodo| async)?.description}}</ng-container>
+        <ng-container *ngIf="todo.description">{{todo.description}}</ng-container>
         <ng-container *ngIf="!todo.description">Please add a description</ng-container>
       </p>
     </div>
@@ -52,3 +52,10 @@
   </mat-card-actions>
 
 </mat-card>
+
+<div class="btn-container">
+  <a mat-raised-button color="primary" routerLink="/">
+    <mat-icon>home</mat-icon>
+    Go to home
+  </a>
+</div>

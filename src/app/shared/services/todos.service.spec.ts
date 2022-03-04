@@ -23,7 +23,7 @@ describe('TodosService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should be return todo list', () => {
+  it('should be return todo list', (done) => {
     const dateOfMockedTodo: Date = new Date();
     const mockListOfTodo: TodoModel[] = [
       { id: 'aa', title: 'a', lastUpdate: dateOfMockedTodo, isClosed: false },
@@ -35,8 +35,12 @@ describe('TodosService', () => {
     service
       .getAllTodos()
       .pipe(first())
-      .subscribe((res: TodoModel[]) => {
-        expect(res).toEqual(mockListOfTodo);
+      .subscribe({
+        next: (res: TodoModel[]) => {
+          expect(res).toEqual(mockListOfTodo);
+          done();
+        },
+        error: done.fail,
       });
 
     const req = httpMock.expectOne((r) => r.url === `/api/todos`);
@@ -45,7 +49,7 @@ describe('TodosService', () => {
     req.flush(mockListOfTodo);
   });
 
-  it('should update todo and return it', () => {
+  it('should update todo and return it', (done) => {
     const dateOfMockedTodo: Date = new Date();
     const todoToUpdate: TodoModel = {
       id: 'aa',
@@ -57,11 +61,15 @@ describe('TodosService', () => {
     service
       .updateTodoState(todoToUpdate)
       .pipe(first())
-      .subscribe((res: TodoModel) => {
-        expect(res).toEqual(todoToUpdate);
+      .subscribe({
+        next: (res: TodoModel) => {
+          expect(res).toEqual(todoToUpdate);
+          done();
+        },
+        error: done.fail,
       });
 
-    const req = httpMock.expectOne((r) => r.url === `/api/todo/aa`);
+    const req = httpMock.expectOne((r) => r.url === `/api/todos/aa`);
     expect(req.request.method).toEqual('PUT');
 
     req.flush(todoToUpdate);
@@ -83,8 +91,30 @@ describe('TodosService', () => {
         expect(res).toEqual(todoToReturn);
       });
 
-    const req = httpMock.expectOne((r) => r.url === `/api/todo/aa`);
+    const req = httpMock.expectOne((r) => r.url === `/api/todos/aa`);
     expect(req.request.method).toEqual('GET');
+
+    req.flush(todoToReturn);
+  });
+
+  it('should add new todo', () => {
+    const dateOfMockedTodo: Date = new Date();
+    const todoToReturn: TodoModel = {
+      id: 'aa',
+      title: 'a',
+      lastUpdate: dateOfMockedTodo,
+      isClosed: false,
+    };
+
+    service
+      .addNewTodo(todoToReturn)
+      .pipe(first())
+      .subscribe((res: TodoModel) => {
+        expect(res).toEqual(todoToReturn);
+      });
+
+    const req = httpMock.expectOne((r) => r.url === `/api/todos`);
+    expect(req.request.method).toEqual('POST');
 
     req.flush(todoToReturn);
   });

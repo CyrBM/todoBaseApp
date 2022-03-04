@@ -6,8 +6,8 @@ export const selectAppState = createFeatureSelector<AppState>('appState');
 
 export const selectTodosList = createSelector(
   selectAppState,
-  (state: AppState) =>
-    [...state.todos].sort((a, b) => {
+  (state: AppState) => {
+    return [...state.todos].sort((a, b) => {
       if (a.isClosed && b.isClosed) {
         return a.lastUpdate.valueOf() > b.lastUpdate.valueOf() ? 1 : -1;
       }
@@ -21,7 +21,8 @@ export const selectTodosList = createSelector(
         return a.lastUpdate.valueOf() > b.lastUpdate.valueOf() ? -1 : 1;
       }
       return 0;
-    })
+    });
+  }
 );
 
 export const selectIsLoading = createSelector(
@@ -30,6 +31,6 @@ export const selectIsLoading = createSelector(
 );
 
 export const selectTodoFromId = (id: string) =>
-  createSelector(selectTodosList, (todoList: TodoModel[]) =>
-    todoList.find((x) => x.id === id)
-  );
+  createSelector(selectTodosList, (todoList: TodoModel[]) => {
+    return todoList.find((x) => x.id === id);
+  });

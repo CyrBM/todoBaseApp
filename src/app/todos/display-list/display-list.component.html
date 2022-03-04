@@ -1,4 +1,10 @@
-<h2 class="h2-custom">Todos :</h2>
+<div class="header">
+  <h2 class="h2-custom">Todos :</h2>
+  <button mat-button (click)="addNewTodo()">
+    <mat-icon>add_circle_outline</mat-icon>
+    Add a new Todo
+  </button>
+</div>
 
 <ul class="list-container" #todosList>
   <li class="item-container" *ngFor="let todo of todos$ | async">

@@ -8,6 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [],
@@ -21,6 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatCheckboxModule,
     MatIconModule,
+    MatDialogModule,
+    MatInputModule,
   ],
   exports: [
     MatCardModule,
@@ -31,6 +35,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatCheckboxModule,
     MatIconModule,
+    MatDialogModule,
+    MatInputModule,
   ],
 })
 export class MaterialModule {}

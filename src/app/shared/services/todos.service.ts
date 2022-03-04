@@ -16,14 +16,21 @@ export class TodosService {
 
   public updateTodoState(todo: TodoModel): Observable<TodoModel> {
     return this.httpClient.put<TodoModel>(
-      `${environment.baseApiUrl}/todo/${todo.id}`,
+      `${environment.baseApiUrl}/todos/${todo.id}`,
       todo
     );
   }
 
   public getTodoById(idTodo: string): Observable<TodoModel> {
     return this.httpClient.get<TodoModel>(
-      `${environment.baseApiUrl}/todo/${idTodo}`
+      `${environment.baseApiUrl}/todos/${idTodo}`
+    );
+  }
+
+  public addNewTodo(todo: TodoModel): Observable<TodoModel> {
+    return this.httpClient.post<TodoModel>(
+      `${environment.baseApiUrl}/todos`,
+      todo
     );
   }
 }

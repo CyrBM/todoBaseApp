@@ -1,11 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TodoModel } from '../../shared/models/todo.model';
 import { Store } from '@ngrx/store';
 import { selectTodosList } from '../../store/selectors/todo.selector';
-import { getTodos, updateTodoState } from '../../store/actions/todo.actions';
+import {
+  addNewTodo,
+  getTodos,
+  updateTodoState,
+} from '../../store/actions/todo.actions';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTodoDialogComponent } from '../add-todo-dialog/add-todo-dialog.component';
 
 @Component({
   selector: 'app-display-list',
@@ -13,11 +19,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./display-list.component.scss'],
 })
 export class DisplayListComponent implements OnInit {
-  todos$: Observable<TodoModel[]>;
+  todos$: Observable<TodoModel[]> = this.store.select(selectTodosList);
 
-  constructor(private readonly store: Store, private router: Router) {
-    this.todos$ = this.store.select(selectTodosList);
-  }
+  constructor(
+    private readonly store: Store,
+    private router: Router,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(getTodos());
@@ -29,5 +37,16 @@ export class DisplayListComponent implements OnInit {
 
   goToDetails(id: string): void {
     this.router.navigate([`todo-detail/${id}`]);
+  }
+
+  addNewTodo(): void {
+    const dialogRef = this.matDialog.open(AddTodoDialogComponent, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe((result: TodoModel | null) => {
+      if (result) {
+        this.store.dispatch(addNewTodo({ todo: result }));
+      }
+    });
   }
 }

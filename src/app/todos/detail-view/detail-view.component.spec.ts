@@ -13,13 +13,26 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TodoModel } from '../../shared/models/todo.model';
 import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { MemoizedSelector } from '@ngrx/store';
+import { CommonModule, DatePipe, UpperCasePipe } from '@angular/common';
+import SpyObj = jasmine.SpyObj;
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 describe('DetailViewComponent', () => {
   let component: DetailViewComponent;
   let fixture: ComponentFixture<DetailViewComponent>;
   let store: MockStore<AppState>;
-  let mockTodoDetailSelector;
   const mockDate = new Date();
+  // const datePipeSpy = jasmine.createSpy('datePipe');
+
+  /* datePipeSpy.transform.and.callFake(((...args: unknown[]) => {
+    return JSON.stringify(args);
+  }) as DatePipe['transform']);
+  upperCasePipeSpy.transform.and.callFake(((...args: unknown[]) =>
+    JSON.stringify(args)) as UpperCasePipe['transform']);*/
 
   const mockedTodo: TodoModel = {
     id: '6a25',
@@ -29,27 +42,39 @@ describe('DetailViewComponent', () => {
     lastUpdate: mockDate,
   };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
-        SharedModule,
+        CommonModule,
+        MatCardModule,
+        MatIconModule,
+        MatDividerModule,
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
       ],
       declarations: [DetailViewComponent],
-      providers: [provideMockStore()],
-    }).compileComponents();
-  });
+      providers: [
+        provideMockStore({
+          selectors: [{ selector: selectTodosList, value: [mockedTodo] }],
+        }),
+        /* { provide: DatePipe, useValue: { transform: datePipeSpy } },
+        { provide: UpperCasePipe, useValue: upperCasePipeSpy },*/
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                id: mockedTodo.id,
+              },
+            },
+          },
+        },
+      ],
+    });
 
-  beforeEach(() => {
-    store = TestBed.inject(MockStore);
-    mockTodoDetailSelector = store.overrideSelector(
-      selectTodoFromId(mockedTodo.id),
-      mockedTodo
-    );
     fixture = TestBed.createComponent(DetailViewComponent);
     component = fixture.componentInstance;
-
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
@@ -65,23 +90,28 @@ describe('DetailViewComponent', () => {
 
   it('should display all detail of todo', () => {
     const todoCard = fixture.debugElement.query(By.css('mat-card'));
-    // TODO a fix
     const todoCardContent = todoCard
       .query(By.css('mat-card-content'))
-      .queryAll(By.css('description-content'));
+      .queryAll(By.css('div'));
+
     expect(
       todoCard.query(By.css('mat-card-title')).nativeElement.innerText
-    ).toEqual(mockedTodo.title);
-
-    expect(
-      todoCard.query(By.css('mat-card-content')).nativeElement.innerText
-    ).toEqual(mockedTodo.title);
-
+    ).toEqual(mockedTodo.title.toUpperCase());
     expect(
       todoCardContent[0].query(By.css('p')).nativeElement.innerText
     ).toEqual(mockedTodo.description);
     expect(
       todoCardContent[1].query(By.css('p')).nativeElement.innerText
     ).toEqual('Task is finished !');
+
+    /* expect(
+      todoCardContent[2].query(By.css('p')).nativeElement.innerText
+    ).toEqual(` Last update : ['${mockedTodo.lastUpdate}', 'medium']`);
+*/
+    //expect(upperCasePipeSpy).toHaveBeenCalledTimes(1);
+    /*    expect(datePipeSpy.transform).toHaveBeenCalledWith(
+      mockedTodo.lastUpdate,
+      'medium'
+    );*/
   });
 });

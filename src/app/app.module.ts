@@ -14,9 +14,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DisplayListComponent } from './todos/display-list/display-list.component';
 import { SharedModule } from './shared/shared.module';
 import { DetailViewComponent } from './todos/detail-view/detail-view.component';
+import { AddTodoDialogComponent } from './todos/add-todo-dialog/add-todo-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, DisplayListComponent, DetailViewComponent],
+  declarations: [
+    AppComponent,
+    DisplayListComponent,
+    DetailViewComponent,
+    AddTodoDialogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,6 +36,7 @@ import { DetailViewComponent } from './todos/detail-view/detail-view.component';
       logOnly: environment.production,
     }),
     SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

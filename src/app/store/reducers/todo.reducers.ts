@@ -1,13 +1,15 @@
 import { TodoModel } from '../../shared/models/todo.model';
 import { createReducer, on } from '@ngrx/store';
 import {
+  addNewTodo,
+  addNewTodoFailed,
+  addNewTodoSuccess,
   getDetailTodo,
   getDetailTodoFailed,
   getDetailTodoSuccess,
   getTodos,
   getTodosFailed,
   getTodosSuccess,
-  loadSpinner,
   updateTodoState,
   updateTodoStateFailed,
   updateTodoStateSuccess,
@@ -81,5 +83,18 @@ export const appReducer = createReducer(
     ...state,
     isLoading: false,
     todos: [],
+  })),
+  on(addNewTodo, (state, { todo }) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(addNewTodoSuccess, (state, { todo }) => ({
+    ...state,
+    todos: [todo, ...state.todos],
+    isLoading: false,
+  })),
+  on(addNewTodoFailed, (state) => ({
+    ...state,
+    isLoading: false,
   }))
 );

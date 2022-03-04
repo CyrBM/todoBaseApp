@@ -15,17 +15,14 @@ import { getTodos, updateTodoState } from '../../store/actions/todo.actions';
   styleUrls: ['./detail-view.component.scss'],
 })
 export class DetailViewComponent {
-  currentTodo: Observable<TodoModel>;
+  currentTodo = this.store.select(
+    selectTodoFromId(this.activatedRoute.snapshot.params['id'])
+  );
 
   constructor(
     private readonly store: Store,
     private activatedRoute: ActivatedRoute
-  ) {
-    const id = this.activatedRoute.snapshot.params['id'];
-    this.currentTodo = this.store.select(
-      selectTodoFromId(id)
-    ) as Observable<TodoModel>;
-  }
+  ) {}
 
   closeTodo(todo: TodoModel) {
     this.store.dispatch(updateTodoState({ todo }));

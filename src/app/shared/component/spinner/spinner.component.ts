@@ -9,9 +9,7 @@ import { selectIsLoading } from '../../../store/selectors/todo.selector';
   styleUrls: ['./spinner.component.scss'],
 })
 export class SpinnerComponent {
-  spinnerLoading$: Observable<boolean>;
+  spinnerLoading$: Observable<boolean> = this.store.select(selectIsLoading);
 
-  constructor(private readonly store: Store) {
-    this.spinnerLoading$ = this.store.select(selectIsLoading);
-  }
+  constructor(private readonly store: Store) {}
 }

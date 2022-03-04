@@ -1,0 +1,26 @@
+<h1 mat-dialog-title> Add new TODO </h1>
+<mat-dialog-content>
+
+  <p>Please fill all fields to create a new TODO</p>
+
+  <form [formGroup]="formGroup">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput [formControl]="controlTitle" />
+      <mat-error *ngIf="controlTitle.invalid">Title is required !</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput [formControl]="controlDescription"></textarea>
+    </mat-form-field>
+
+  </form>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancelForm()">Cancel</button>
+    <button mat-button type="submit" [disabled]="formGroup.invalid" (click)="closeModalWithTodoCreated()">Ok</button>
+  </div>
+
+</mat-dialog-content>
